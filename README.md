@@ -1,2 +1,2 @@
-# Mypython
+# MyPython
 My Python works
