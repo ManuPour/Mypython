@@ -1,29 +1,22 @@
 # My XoX game
 
-board =['']*10
+board =['']*9
 currentPlayer = 'X'
 winner = None
 gameRunning = True
+
 #def main():
 #   print("Be bazi-ye DOZ khosh amadid!")
 #   input('Esmet chie?:')
 #main()
 
 # Create board and show it
-def showGame(board):
-    print('      |     |')
-    print('      |     |')
-    print('' + board[0] + '      |' + board[1] + '     |' + board[2])
+def showBoard(board):
+    print(board[0] + '      |' + board[1] + '     |' + board[2])
     print('--------------------')
-    print('      |     |')
-    print('' + board[3] + '      |' + board[4] + '     |' + board[5])
-    print('      |     |')
+    print(board[3] + '      |' + board[4] + '     |' + board[5])
     print('--------------------')
-    print('' + board[6] + '      |' + board[7] + '     |' + board[8])
-    print('      |     |')
-    print('      |     |')
-
-showGame(board)
+    print(board[6] + '      |' + board[7] + '     |' + board[8])
 
 # Create player
 def playerInput(board):
@@ -31,8 +24,7 @@ def playerInput(board):
     if board[inp-1] == '':
         board[inp-1] = currentPlayer
     else:
-        print('Player is already there')
-# Check the winner
+        print('Player is already there, try again')
 
 # Check the vertical
 def checkVertical (board):
@@ -66,33 +58,47 @@ def checkDiag(board):
     if board[0] == board[4] == board[8] and board[0] != '':
         winner = board[0]
         return True
-    elif board[2] == board[4] == board[6] and board[2] != '':
+    elif board[2] == board[4] == board[6] and board[4] != '':
         winner = board[2]
         return True
+
+# Check the winner
+def checkWinner(board):
+    global gameRunning
+    if checkVertical(board):
+        showBoard(board)
+        print(f'The winner is {winner}!')
+        gameRunning = False
+    elif checkRow(board):
+        showBoard(board)
+        print(f'The winner is {winner}!')
+        gameRunning = False
+    elif checkDiag(board):
+        showBoard(board)
+        print(f'The winner is {winner}!')
+        gameRunning = False
 # Check tie
-def checkTie(board):
+def checkIfTie(board):
     global gameRunning
     if '' not in board:
-        showGame(board)
-        print('It is a tie!')
+        showBoard(board)
+        print("It is a tie!")
         gameRunning = False
-# Check the winner
-def checkWinner():
-    global gameRunning
-    if checkVertical(board) or checkRow(board) or checkDiag(board):
-        print(f'The winner is {winner}')
-        gameRunning = False
+
 # Switch the player
-def swithPlayer():
+def switchPlayer():
     global currentPlayer
     if currentPlayer == 'X':
         currentPlayer = 'O'
     else:
         currentPlayer ='X'
 
+
 while gameRunning:
-    showGame(board)
+    showBoard(board)
     playerInput(board)
-    checkTie(board)
-    checkWinner()
-    swithPlayer()
+    checkWinner(board)
+    switchPlayer()
+    checkIfTie(board)
+    checkWinner(board)
+
