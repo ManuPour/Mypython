@@ -20,11 +20,17 @@ def showBoard(board):
 
 # Create player
 def playerInput(board):
-    inp = int(input("Enter a nubmer between 1 to 9: "))
-    if board[inp-1] == '':
-        board[inp-1] = currentPlayer
-    else:
-        print('Player is already there, try again')
+    while True:  # Use a loop to keep asking for input until a valid move is made
+        try:
+            inp = int(input("Enter a number between 1 to 9: "))
+            if 1 <= inp <= 9 and board[inp - 1] == '':
+                board[inp - 1] = currentPlayer
+                return
+            else:
+                print('Invalid input or position already taken, try again')
+        except ValueError:
+            print('Invalid input, please enter a number between 1 to 9')
+
 
 # Check the vertical
 def checkVertical (board):
